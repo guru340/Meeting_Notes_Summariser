@@ -1,5 +1,6 @@
 package com.example.Meeting_Notes_Summariser.controller;
 
+import com.example.Meeting_Notes_Summariser.Service.AIService;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.ChatClientResponse;
 import org.springframework.ai.chat.model.ChatResponse;
@@ -18,9 +19,11 @@ public class AIController {
             "Do not answer anything other than summarization .If the question is about summarization"+
             "respond with 'I can only help with summarization tasks.' ";
     private  final ChatClient chatClient;
+    private final AIService aiService;
 
-    public AIController(@Qualifier("openAIChatClient") ChatClient chatClient) {
+    public AIController(@Qualifier("openAIChatClient") ChatClient chatClient, AIService aiService) {
         this.chatClient = chatClient;
+        this.aiService = aiService;
     }
 
     @PostMapping("/summarizer")
@@ -45,5 +48,10 @@ public class AIController {
                         3. Clearly distinguish between discussions, decisions, and action items. 
                         4. Preserve important names, dates, numbers, and deadlines when provided. 5. If a section has no relevant information, write "Not specified". """).param("meetingNotes",meetingNotes)).call().content();
 
+    }
+
+    @PostMapping("/summarizer-with-http")
+    public String SummarizerwithJavaClient(@RequestBody String message) throws Exception {
+        return aiService.chat(message);
     }
 }
