@@ -15,5 +15,5 @@ spring:
 logging:
   level:
     root:
-       com.example.Meeting_Notes_Summariser:INFO
-       org.springframework.ai:INFO
+       INFO
+
