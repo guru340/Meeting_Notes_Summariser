@@ -1,6 +1,8 @@
 package com.example.Meeting_Notes_Summariser.controller;
 
 import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.ai.chat.client.ChatClientResponse;
+import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,10 +24,26 @@ public class AIController {
     }
 
     @PostMapping("/summarizer")
-    public String summarsize(@RequestBody String message){
-        return chatClient.prompt().
-                user(message).system(SYSTEM_PROPMT)
-                .call().
-                content();
+    public ChatClientResponse summarsize(@RequestBody String message){
+        return chatClient.prompt()
+                .system(SYSTEM_PROPMT)
+                .user(message)
+                .call()
+                .chatClientResponse();
+
+    }
+
+
+
+
+    @PostMapping("/summarizer-meeting-notes")
+    public String summarizingmeetingnotes(@RequestBody String meetingNotes){
+        return chatClient.prompt()
+                .system(SYSTEM_PROPMT)
+                .user(u->u.text(""" 
+                        You are an expert meeting-notes summarization assistant. Your task is to summarize the following meeting notes: {meetingNotes} Use the following format while creating the summary: Meeting Summary: - Objective: - Key Discussion Points: - Decisions Made: - Action Items: - Next Steps: Example: Input: In today's sales strategy meeting, we revised Q3 targets and identified performance gaps. The team discussed improving customer acquisition, increasing sales conversion rates, and assigning new targets to each sales representative. Output: Meeting Summary: - Objective: Review Q3 sales targets and identify performance gaps. - Key Discussion Points: Customer acquisition, sales conversion, and individual sales targets were discussed. - Decisions Made: Q3 targets were revised and new targets were assigned to sales representatives. - Action Items: Sales representatives need to work on improving customer acquisition and conversion rates. - Next Steps: Track performance against the revised Q3 targets. Important Instructions: 1. Keep the summary concise and easy to understand. 2. Do not add information that is not present in the meeting notes. 
+                        3. Clearly distinguish between discussions, decisions, and action items. 
+                        4. Preserve important names, dates, numbers, and deadlines when provided. 5. If a section has no relevant information, write "Not specified". """).param("meetingNotes",meetingNotes)).call().content();
+
     }
 }
