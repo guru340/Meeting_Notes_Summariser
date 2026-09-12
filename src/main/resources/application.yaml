@@ -11,7 +11,14 @@ spring:
       chat:
         model: ${GROQ_MODEL}
 
-
+    huggingface:
+      chat:
+        api-key: ${HUGGINGFACE_API_KEY}
+        url: https://router.huggingface.co/hf-inference
+        options:
+          model: Qwen/Qwen2.5-Coder-7B-Instruct
+          max-new-tokens: 1024
+          temperature: 0.7
 logging:
   level:
     root:
