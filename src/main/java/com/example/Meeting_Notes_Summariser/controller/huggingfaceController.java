@@ -12,20 +12,20 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/huggingface/chat")
 public class huggingfaceController {
 
-    private final static String SYSTEM_PROPMT="You are a senior engineer. Generate code based on the given description. "+
-            "Ensure the code is idiomatic, efficient, and follows best practices.";
-
-    private final ChatClient chatClient;
-
-    public huggingfaceController(@Qualifier("huggingfaceChatClient") ChatClient chatClient) {
-        this.chatClient = chatClient;
-    }
-
-    @PostMapping("/generate-code")
-    public ChatClientResponse generatecode(@RequestBody String message){
-        return chatClient.prompt()
-                .system(SYSTEM_PROPMT).
-                user(message)
-                .call().chatClientResponse();
-    }
+//    private final static String SYSTEM_PROPMT="You are a senior engineer. Generate code based on the given description. "+
+//            "Ensure the code is idiomatic, efficient, and follows best practices.";
+//
+//    private final ChatClient chatClient;
+//
+//    public huggingfaceController(@Qualifier("huggingfaceChatClient") ChatClient chatClient) {
+//        this.chatClient = chatClient;
+//    }
+//
+//    @PostMapping("/generate-code")
+//    public ChatClientResponse generatecode(@RequestBody String message){
+//        return chatClient.prompt()
+//                .system(SYSTEM_PROPMT).
+//                user(message)
+//                .call().chatClientResponse();
+//    }
 }

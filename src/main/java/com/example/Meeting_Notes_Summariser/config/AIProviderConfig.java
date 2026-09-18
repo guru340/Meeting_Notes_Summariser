@@ -14,8 +14,8 @@ public class AIProviderConfig {
         return ChatClient.builder(openAiChatModel).build();
     }
 
-    @Bean("huggingfaceChatClient")
-    ChatClient huggingfaceChatClient(HuggingfaceChatModel huggingfaceChatModel){
-        return ChatClient.builder(huggingfaceChatModel).build();
-    }
+//    @Bean("huggingfaceChatClient")
+//    ChatClient huggingfaceChatClient(HuggingfaceChatModel huggingfaceChatModel){
+//        return ChatClient.builder(huggingfaceChatModel).build();
+//    }
 }
