@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class huggingfaceController {
 
     private final static String SYSTEM_PROPMT="You are a senior engineer. Generate code based on the given description. "+
-            "Ensure the code is idiomatic, efficient, and follows best pracices.";
+            "Ensure the code is idiomatic, efficient, and follows best practices.";
 
     private final ChatClient chatClient;
 
