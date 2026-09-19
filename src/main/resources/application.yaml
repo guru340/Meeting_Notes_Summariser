@@ -21,6 +21,6 @@ spring:
           temperature: 0.7
 logging:
   level:
-    root:
-       INFO
+    root: INFO
+    org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor: DEBUG
 

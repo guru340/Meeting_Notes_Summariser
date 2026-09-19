@@ -104,4 +104,11 @@ public class AIController {
                 .map(tokenList->String.join(",",tokenList));
 
     }
+
+    @PostMapping("/system-with-adivisor")
+    public String summarisewithadivisor(@RequestBody String  message){
+        return chatClient.prompt()
+
+                .user(message).call().content();
+    }
 }
