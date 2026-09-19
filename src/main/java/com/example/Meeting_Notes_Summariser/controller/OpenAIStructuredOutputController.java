@@ -45,8 +45,8 @@ public class OpenAIStructuredOutputController {
         return chatclient.prompt()
                 .options(ChatOptions.builder()
 
-                        .maxTokens(500)
-                        .temperature(2.0))
+                        .maxTokens(200)
+                        .temperature(2.0).topP(0.1))
                 .user(message)
                 .call()
                 .content();
