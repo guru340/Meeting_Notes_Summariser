@@ -1,6 +1,8 @@
 package com.example.Meeting_Notes_Summariser.config;
 
 import com.example.Meeting_Notes_Summariser.advisor.ErrorWrappingAdvisior;
+import com.example.Meeting_Notes_Summariser.advisor.SystemPromptAdvisior;
+import com.example.Meeting_Notes_Summariser.advisor.ValidationAdvisor;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.SafeGuardAdvisor;
 import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor;
@@ -16,9 +18,10 @@ public class AIProviderConfig {
 
     @Bean("openAIChatClient")
     ChatClient openAIchatClient(OpenAiChatModel openAiChatModel
-    , SimpleLoggerAdvisor simpleLoggerAdvisor, SafeGuardAdvisor safeGuardAdvisor, ErrorWrappingAdvisior errorWrappingAdvisior){
+    , SimpleLoggerAdvisor simpleLoggerAdvisor, SafeGuardAdvisor safeGuardAdvisor, ErrorWrappingAdvisior errorWrappingAdvisior,
+                                SystemPromptAdvisior systemPromptAdvisior, ValidationAdvisor validationAdvisor){
 
-        return ChatClient.builder(openAiChatModel).defaultAdvisors(safeGuardAdvisor,simpleLoggerAdvisor,errorWrappingAdvisior).build();
+        return ChatClient.builder(openAiChatModel).defaultAdvisors(safeGuardAdvisor,simpleLoggerAdvisor,errorWrappingAdvisior,systemPromptAdvisior,validationAdvisor).build();
     }
 
 //    @Bean("huggingfaceChatClient")
