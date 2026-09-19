@@ -1,6 +1,7 @@
 package com.example.Meeting_Notes_Summariser.controller;
 
 import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.ai.chat.prompt.ChatOptions;
 import org.springframework.ai.converter.ListOutputConverter;
 import org.springframework.ai.converter.MapOutputConverter;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -36,6 +37,19 @@ public class OpenAIStructuredOutputController {
                 .user(message)
                 .call()
                 .entity(new MapOutputConverter());
+    }
+
+    @PostMapping("/general-chat")
+    public String generalchat(@RequestBody String message){
+
+        return chatclient.prompt()
+                .options(ChatOptions.builder()
+
+                        .maxTokens(500)
+                        .temperature(2.0))
+                .user(message)
+                .call()
+                .content();
     }
 
 }
