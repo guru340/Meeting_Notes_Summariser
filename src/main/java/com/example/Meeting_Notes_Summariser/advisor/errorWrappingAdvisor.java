@@ -22,10 +22,10 @@ import java.util.Map;
 
 @Slf4j
 @Component
-public class ErrorWrappingAdvisior implements CallAdvisor, StreamAdvisor {
+public class errorWrappingAdvisor implements CallAdvisor, StreamAdvisor {
     private final ObjectMapper objectMapper;
 
-    public ErrorWrappingAdvisior(ObjectMapper objectMapper) {
+    public errorWrappingAdvisor(ObjectMapper objectMapper) {
         this.objectMapper = objectMapper;
     }
 
@@ -33,7 +33,9 @@ public class ErrorWrappingAdvisior implements CallAdvisor, StreamAdvisor {
     public ChatClientResponse adviseCall(ChatClientRequest chatClientRequest, CallAdvisorChain callAdvisorChain) {
         log.info("Request received in ErrorWrappingAdvisior with prompt : {}",
                 chatClientRequest.prompt().getUserMessage().getText());
+
         ChatClientResponse chatClientResponse=callAdvisorChain.nextCall(chatClientRequest);
+
         String assistMessage=chatClientResponse.chatResponse().getResult().getOutput().getText().trim();
 
         if(!assistMessage.startsWith("```json") && !assistMessage.startsWith("{")){
@@ -57,7 +59,7 @@ public class ErrorWrappingAdvisior implements CallAdvisor, StreamAdvisor {
 
     @Override
     public String getName() {
-        return "ErrorWrappingAdvisor";
+        return "errorWrappingAdvisor";
     }
 
     @Override

@@ -21,7 +21,7 @@ public class ValidationAdvisor implements CallAdvisor, StreamAdvisor {
         validateinput(chatClientRequest);
         ChatClientResponse chatClientResponse=callAdvisorChain.nextCall(chatClientRequest);
         validateOutput(chatClientResponse);
-        return null;
+        return chatClientResponse;
     }
 
     private void validateOutput(ChatClientResponse chatClientResponse) {
@@ -51,7 +51,7 @@ public class ValidationAdvisor implements CallAdvisor, StreamAdvisor {
 
     @Override
     public String getName() {
-        return "";
+        return "ValidationAdvisor";
     }
 
     @Override
