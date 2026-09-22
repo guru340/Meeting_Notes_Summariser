@@ -4,9 +4,12 @@ import com.example.Meeting_Notes_Summariser.Service.AIService;
 import com.example.Meeting_Notes_Summariser.dto.SummarizationResponse;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.ChatClientResponse;
-import org.springframework.ai.chat.model.ChatResponse;
+import org.springframework.ai.chat.prompt.Prompt;
+import org.springframework.ai.chat.prompt.PromptTemplate;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.core.io.Resource;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,6 +20,7 @@ import reactor.core.publisher.Flux;
 import java.time.Duration;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/openai/chat")
@@ -28,6 +32,9 @@ public class AIController {
             "respond with 'I can only help with summarization tasks.' ";
     private final ChatClient chatClient;
     private final AIService aiService;
+
+    @Value("classpath:/templates/summarize-prompt.st")
+    private Resource summarizeprompt;
 
     public AIController(@Qualifier("openAIChatClient") ChatClient chatClient, AIService aiService) {
         this.chatClient = chatClient;
@@ -70,6 +77,19 @@ public class AIController {
         }
 
     }
+
+
+    @PostMapping("/summarizer-meeting-notes-with-prompt-template")
+    public SummarizationResponse summarizingmeetingnotesStructedOuputAndPromptTemplate(@RequestBody String meetingNotes) {
+        PromptTemplate promptTemplate=new PromptTemplate(summarizeprompt);
+        Prompt prompt=promptTemplate.create(Map.of("meetingnotes",meetingNotes));
+        return  chatClient.prompt(prompt)
+                .system(SYSTEM_PROPMT)
+                .call()
+                .entity(SummarizationResponse.class);
+
+    }
+
 
     @PostMapping("/summarizer-meeting-notes-structed-list")
     public List<SummarizationResponse> summarizingmeetingnotesStructedOuputList(@RequestBody String meetingNotes) {

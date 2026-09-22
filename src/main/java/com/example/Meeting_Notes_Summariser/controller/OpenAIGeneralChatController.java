@@ -2,6 +2,7 @@ package com.example.Meeting_Notes_Summariser.controller;
 
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.prompt.ChatOptions;
+import org.springframework.ai.openai.OpenAiChatOptions;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,6 +26,7 @@ public class OpenAIGeneralChatController {
     public String generalchat(@RequestBody String message){
 
         return chatClient.prompt()
+                .options(OpenAiChatOptions.builder().temperature(2.0).topP(0.1))
                 .user(message)
                 .call()
                 .content();
