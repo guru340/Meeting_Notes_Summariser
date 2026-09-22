@@ -39,18 +39,7 @@ public class OpenAIStructuredOutputController {
                 .entity(new MapOutputConverter());
     }
 
-    @PostMapping("/general-chat")
-    public String generalchat(@RequestBody String message){
 
-        return chatclient.prompt()
-                .options(ChatOptions.builder()
-
-                        .maxTokens(1000)
-                        .temperature(2.0).stopSequences((List.of("END_OF_PARA"))))
-                .user(message)
-                .call()
-                .content();
-    }
 
 
 }

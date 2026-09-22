@@ -23,6 +23,13 @@ public class AIProviderConfig {
         return ChatClient.builder(openAiChatModel).defaultAdvisors(safeGuardAdvisor,simpleLoggerAdvisor, errorWrappingAdvisor,systemPromptAdvisior,validationAdvisor).build();
     }
 
+    @Bean("openAIGeneralChatClient")
+    ChatClient openAIGeneralchatClient(OpenAiChatModel openAiChatModel){
+
+        return ChatClient.builder(openAiChatModel).build();
+    }
+
+
 //    @Bean("huggingfaceChatClient")
 //    ChatClient huggingfaceChatClient(HuggingfaceChatModel huggingfaceChatModel){
 //        return ChatClient.builder(huggingfaceChatModel).build();
