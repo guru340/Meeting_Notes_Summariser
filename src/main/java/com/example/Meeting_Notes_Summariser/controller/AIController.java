@@ -36,7 +36,7 @@ public class AIController {
     @Value("classpath:/templates/summarize-prompt.st")
     private Resource summarizeprompt;
 
-    public AIController(@Qualifier("openAIChatClient") ChatClient chatClient, AIService aiService) {
+    public AIController(@Qualifier("openAIGeneralChatClient") ChatClient chatClient, AIService aiService) {
         this.chatClient = chatClient;
         this.aiService = aiService;
     }

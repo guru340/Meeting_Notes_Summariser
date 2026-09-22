@@ -3,6 +3,7 @@ package com.example.Meeting_Notes_Summariser.config;
 import com.example.Meeting_Notes_Summariser.advisor.errorWrappingAdvisor;
 import com.example.Meeting_Notes_Summariser.advisor.systemPromptAdvisor;
 import com.example.Meeting_Notes_Summariser.advisor.ValidationAdvisor;
+import com.example.Meeting_Notes_Summariser.jailbreaking.BookingTools;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.SafeGuardAdvisor;
 import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor;
@@ -24,9 +25,10 @@ public class AIProviderConfig {
     }
 
     @Bean("openAIGeneralChatClient")
-    ChatClient openAIGeneralchatClient(OpenAiChatModel openAiChatModel){
+    ChatClient openAIGeneralchatClient(OpenAiChatModel openAiChatModel, BookingTools bookingTools){
 
-        return ChatClient.builder(openAiChatModel).build();
+        return ChatClient.builder(openAiChatModel)
+                .defaultTools(bookingTools).build();
     }
 
 
