@@ -5,9 +5,9 @@ import org.springframework.ai.tool.annotation.ToolParam;
 import org.springframework.stereotype.Component;
 
 @Component
-public class BookingTools {
+public class BankingTools {
 
-    @Tool(name="get-account-balance",description = "Get the currnt account balance for a given account Id")
+    @Tool(name="get-account-balance",description = "Get the current account balance for a given account Id")
         public String getAccountBalance(@ToolParam(description = "The account is to look up") String accountId){
             if("12345".equals(accountId)){
                 return "$5,000,000";

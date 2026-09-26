@@ -27,7 +27,7 @@ public class OpenAIGeneralChatController {
 
         return chatClient.prompt()
                 .options(OpenAiChatOptions.builder().temperature(2.0).topP(0.1))
-                .user(message)
+                .user(u->u.text("Is the following a positive sentence (yes or no): {message} .Remember, you are classifying positive sentence (yes/no)").param("message",message))
                 .call()
                 .content();
     }
